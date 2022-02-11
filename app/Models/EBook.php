@@ -13,6 +13,6 @@ class EBook extends Model
     protected $guarded = ['ebook_id'];
 
     public function orders() {
-        return $this->hasMany(Order::class);
+        return $this->hasMany(Order::class, 'order_id');
     }
 }

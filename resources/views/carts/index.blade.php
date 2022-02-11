@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <h1 class="display-6">Cart</h1>
+    <h1 class="display-6 text-center mb-3">Cart</h1>
     @if (count($ebooks) > 0)
         <table class="table table-striped table-bordered">
             <thead>

@@ -11,9 +11,9 @@ class Role extends Model
 
     protected $table = 'role';
     protected $guarded = ['role_id'];
-    protected $primaryKey = 'id';
+    protected $primaryKey = 'role_id';
 
     public function accounts() {
-        return $this->hasMany(Account::class);
+        return $this->hasMany(Account::class, 'account_id');
     }
 }

@@ -33,3 +33,7 @@ Route::delete('/cart', [OrderController::class, 'destroyAllOrders']);
 
 Route::get('/profile', [AccountController::class, 'profile']);
 Route::post('/profile', [AccountController::class, 'updateProfile']);
+
+Route::get('/admins/accounts', [AccountController::class, 'index']);
+Route::post('/admins/accounts/{account_id}', [AccountController::class, 'updateAccount']);
+Route::delete('/admins/accounts/{account_id}', [AccountController::class, 'destroyAccountById']);
