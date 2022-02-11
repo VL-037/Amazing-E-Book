@@ -13,6 +13,14 @@ use Illuminate\Support\Facades\Validator;
 
 class AccountController extends Controller
 {
+    public function home()
+    {
+        if (Auth::user()) {
+            return view('users.home');
+        }
+        return view('welcome');
+    }
+
     public function signUp()
     {
         $user = Auth::user();
@@ -56,12 +64,71 @@ class AccountController extends Controller
 
         Storage::disk('public')->put('images', $req->display_picture);
         $credentials['password'] = Hash::make($credentials['password']);
-        $credentials['display_picture_link'] = '/uploads/images/'.$req->display_picture->hashName();
+        $credentials['display_picture_link'] = '/uploads/images/' . $req->display_picture->hashName();
 
-        $account = new Account;
-        $account->fill($credentials);
-        $account->save();
+        // $account = new Account;
+        // $account->fill($credentials);
+        // $account->save();
 
-        dd($account);
+        $account = Account::create([
+            'role_id' => $credentials['role_id'],
+            'gender_id' => $credentials['role_id'],
+            'first_name' => $credentials['first_name'],
+            'middle_name' => $credentials['middle_name'],
+            'last_name' => $credentials['last_name'],
+            'email' => $credentials['email'],
+            'password' => $credentials['password'],
+            'display_picture_link' => $credentials['display_picture_link'],
+        ]);
+
+        if(Auth::attempt([
+            'email' => $req['email'],
+            'password' => $req['password'],
+        ])) {
+            return redirect()->intended('/');
+        }
+        return redirect('/signup');
+    }
+
+    public function login()
+    {
+        $user = Auth::user();
+        if ($user) {
+            return redirect('/');
+        }
+        return view('users.login');
+    }
+
+    public function loginAuth(Request $req)
+    {
+        $credentials = $req->except(array('_token'));
+        $rules = array(
+            'email' => 'required',
+            'password' => 'required',
+        );
+
+        $validator = Validator::make($credentials, $rules, $messages = [
+            'required' => 'The :attribute field is required',
+        ]);
+        $errors = $validator->errors();
+
+        if ($validator->fails()) {
+            return back()->with(['errors' => $errors]);
+        }
+
+        if(Auth::attempt([
+            'email' => $credentials['email'],
+            'password' => $credentials['password'],
+        ])) {
+            return redirect()->intended('/');
+        }
+        $errors->getMessageBag()->add('credentials', 'Email or Password is incorrect');
+
+        return back()->with(['errors' => $errors]);
+    }
+
+    public function logout() {
+        Auth::logout();
+        return redirect('/login');
     }
 }

@@ -14,5 +14,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/', [AccountController::class, 'home']);
 Route::get('/signup', [AccountController::class, 'signUp']);
 Route::post('/signup', [AccountController::class, 'signUpStore']);
+Route::get('/login', [AccountController::class, 'login']);
+Route::post('/login', [AccountController::class, 'loginAuth']);
+Route::get('/logout', [AccountController::class, 'logout']);

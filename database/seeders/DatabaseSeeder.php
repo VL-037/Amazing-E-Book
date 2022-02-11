@@ -16,7 +16,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             RoleSeeder::class,
             GenderSeeder::class,
-            // AccountSeeder::class
+            AccountSeeder::class
         ]);
     }
 }
