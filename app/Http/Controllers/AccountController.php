@@ -16,7 +16,7 @@ class AccountController extends Controller
 {
     public function home()
     {
-        if (Auth::user()) {
+        if (Auth::user() && session()->has('account')) {
             $myRoleDesc = Role::where('role_id', Auth::user()->role_id)->with('accounts')->first()->role_desc;
             $ebooks = EBook::all();
             return view('users.home')->with(['ebooks' => $ebooks, 'myRole' => $myRoleDesc]);
@@ -26,7 +26,7 @@ class AccountController extends Controller
 
     public function signUp()
     {
-        $user = Auth::user();
+        $user = Auth::user() && session()->has('account');
         if ($user) {
             return redirect('/');
         }
@@ -80,10 +80,11 @@ class AccountController extends Controller
             'display_picture_link' => $credentials['display_picture_link'],
         ]);
 
-        if(Auth::attempt([
+        if (Auth::attempt([
             'email' => $req['email'],
             'password' => $req['password'],
         ])) {
+            $req->session()->put('account', $account);
             return redirect()->intended('/');
         }
         return redirect('/signup');
@@ -115,10 +116,12 @@ class AccountController extends Controller
             return back()->with(['errors' => $errors]);
         }
 
-        if(Auth::attempt([
+        if (Auth::attempt([
             'email' => $credentials['email'],
             'password' => $credentials['password'],
         ])) {
+            $account = Auth::user();
+            $req->session()->put('account', $account);
             return redirect()->intended('/');
         }
         $errors->getMessageBag()->add('credentials', 'Email or Password is incorrect');
@@ -126,7 +129,9 @@ class AccountController extends Controller
         return back()->with(['errors' => $errors]);
     }
 
-    public function logout() {
+    public function logout()
+    {
+        session()->flush();
         Auth::logout();
         return redirect('/login');
     }
