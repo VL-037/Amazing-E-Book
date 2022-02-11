@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AccountController;
+use App\Http\Controllers\EBookController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,3 +21,5 @@ Route::post('/signup', [AccountController::class, 'signUpStore']);
 Route::get('/login', [AccountController::class, 'login']);
 Route::post('/login', [AccountController::class, 'loginAuth']);
 Route::get('/logout', [AccountController::class, 'logout']);
+
+Route::get('/ebooks/{ebook_id}', [EBookController::class, 'detail']);
