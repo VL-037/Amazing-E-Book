@@ -16,11 +16,11 @@ class Account extends Authenticatable
     protected $hidden = ['password', 'remember_token'];
 
     public function role() {
-        return $this->hasOne(Role::class);
+        return $this->belongsTo(Role::class, 'role_id');
     }
 
     public function gender() {
-        return $this->hasOne(Gender::class);
+        return $this->belongsTo(Gender::class);
     }
 
     public function orders() {

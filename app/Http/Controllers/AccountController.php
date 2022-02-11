@@ -194,4 +194,22 @@ class AccountController extends Controller
         $myRoleDesc = Role::where('role_id', Auth::user()->role_id)->with('accounts')->first()->role_desc;
         return view('users.saved')->with(['myRole' => $myRoleDesc]);
     }
+
+    public function index()
+    {
+        if (Auth::user() && session()->has('account')) {
+            $accounts = Account::with('role')->get();
+            $myRoleDesc = Role::where('role_id', Auth::user()->role_id)->first()->role_desc;
+            return view('users.admins.index')->with(['accounts' => $accounts, 'myRole' => $myRoleDesc]);
+        }
+        return redirect('/');
+    }
+
+    public function updateAccount($account_id)
+    {
+    }
+
+    public function destroyAccountById($account_id)
+    {
+    }
 }
