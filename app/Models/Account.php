@@ -20,11 +20,11 @@ class Account extends Authenticatable
     }
 
     public function gender() {
-        return $this->belongsTo(Gender::class);
+        return $this->belongsTo(Gender::class, 'gender_id');
     }
 
     public function orders() {
-        return $this->hasMany(Order::class);
+        return $this->hasMany(Order::class, 'order_id');
     }
 
 }
