@@ -35,5 +35,6 @@ Route::get('/profile', [AccountController::class, 'profile']);
 Route::post('/profile', [AccountController::class, 'updateProfile']);
 
 Route::get('/admins/accounts', [AccountController::class, 'index']);
+Route::get('/admins/accounts/{account_id}', [AccountController::class, 'updateAccountPage']);
 Route::post('/admins/accounts/{account_id}', [AccountController::class, 'updateAccount']);
 Route::delete('/admins/accounts/{account_id}', [AccountController::class, 'destroyAccountById']);

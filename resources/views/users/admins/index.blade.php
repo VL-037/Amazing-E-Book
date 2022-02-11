@@ -18,7 +18,7 @@
                         {{ $a->last_name }} - {{ $a->role->role_desc }}</td>
                     <td class="text-center">
                         <div class="d-flex justify-content-evenly">
-                            <a href="/admins/accounts/{{ $a->account_id }}/update">
+                            <a href="/admins/accounts/{{ $a->account_id }}">
                                 <button class="btn btn-success">Update</button>
                             </a>
                             <form action="/admins/accounts/{{ $a->account_id }}" method="POST">
