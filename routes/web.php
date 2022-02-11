@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\EBookController;
+use App\Http\Controllers\OrderController;
+use App\Models\Order;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -23,3 +25,8 @@ Route::post('/login', [AccountController::class, 'loginAuth']);
 Route::get('/logout', [AccountController::class, 'logout']);
 
 Route::get('/ebooks/{ebook_id}', [EBookController::class, 'detail']);
+Route::post('/ebooks/{ebook_id}', [EBookController::class, 'addToOrder']);
+
+Route::get('/cart', [OrderController::class, 'index']);
+Route::delete('/cart/{ebook_id}', [OrderController::class, 'destroyOrderById']);
+Route::delete('/cart', [OrderController::class, 'destroyAllOrders']);
