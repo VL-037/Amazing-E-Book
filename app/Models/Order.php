@@ -14,10 +14,10 @@ class Order extends Model
     protected $primaryKey = 'order_id';
 
     public function account() {
-        return $this->hasOne(Account::class);
+        return $this->belongsTo(Account::class);
     }
 
     public function ebook() {
-        return $this->hasOne(EBook::class);
+        return $this->belongsTo(EBook::class);
     }
 }
