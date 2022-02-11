@@ -189,7 +189,7 @@ class AccountController extends Controller
             'password' => $credentials['password'],
             'display_picture_link' => $credentials['display_picture_link'],
             'modified_at' => date('Y-m-d H:i:s'),
-            'modified_by' => Auth::user()->first_name.Auth::user()->last_name
+            'modified_by' => Auth::user()->first_name.' '.Auth::user()->last_name
         ]);
         $myRoleDesc = Role::where('role_id', Auth::user()->role_id)->with('accounts')->first()->role_desc;
         return view('users.saved')->with(['myRole' => $myRoleDesc]);
@@ -205,11 +205,31 @@ class AccountController extends Controller
         return redirect('/');
     }
 
-    public function updateAccount($account_id)
+    public function updateAccountPage($account_id)
     {
+        if (Auth::user() && session()->has('account')) {
+            $account = Account::where('account_id', $account_id)->first();
+            $roles = Role::all();
+            $myRoleDesc = Role::where('role_id', Auth::user()->role_id)->first()->role_desc;
+            return view('users.admins.update')->with(['account' => $account, 'roles' => $roles, 'myRole' => $myRoleDesc]);
+        }
+        return redirect('/');
+    }
+
+    public function updateAccount(Request $req)
+    {
+        $credentials = $req->except(array('_token'));
+        Account::where('account_id', $req->account_id)->update([
+            'role_id' => $credentials['role_id'],
+            'modified_at' => date('Y-m-d H:i:s'),
+            'modified_by' => Auth::user()->first_name.' '.Auth::user()->last_name
+        ]);
+        return redirect('/admins/accounts');
     }
 
     public function destroyAccountById($account_id)
     {
+        Account::destroy($account_id);
+        return back();
     }
 }
