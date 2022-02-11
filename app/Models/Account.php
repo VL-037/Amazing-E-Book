@@ -23,4 +23,8 @@ class Account extends Authenticatable
         return $this->hasOne(Gender::class);
     }
 
+    public function orders() {
+        return $this->hasMany(Order::class);
+    }
+
 }

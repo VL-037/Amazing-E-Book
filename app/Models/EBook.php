@@ -11,4 +11,8 @@ class EBook extends Model
 
     protected $table = 'ebook';
     protected $guarded = ['ebook_id'];
+
+    public function orders() {
+        return $this->hasMany(Order::class);
+    }
 }

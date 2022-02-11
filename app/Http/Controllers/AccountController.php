@@ -71,7 +71,7 @@ class AccountController extends Controller
 
         $account = Account::create([
             'role_id' => $credentials['role_id'],
-            'gender_id' => $credentials['role_id'],
+            'gender_id' => $credentials['gender_id'],
             'first_name' => $credentials['first_name'],
             'middle_name' => $credentials['middle_name'],
             'last_name' => $credentials['last_name'],
@@ -134,5 +134,63 @@ class AccountController extends Controller
         session()->flush();
         Auth::logout();
         return redirect('/login');
+    }
+
+    public function profile()
+    {
+        $user = Auth::user();
+        if ($user) {
+            $genders = Gender::all();
+            $myRoleDesc = Role::where('role_id', Auth::user()->role_id)->with('accounts')->first()->role_desc;
+            return view('users.profile')->with(['user' => $user, 'genders' => $genders, 'myRole' => $myRoleDesc]);
+        }
+        return redirect('/');
+    }
+
+    public function updateProfile(Request $req)
+    {
+        $credentials = $req->except(array('_token'));
+        $rules = array(
+            'gender_id' => 'required',
+            'first_name' => 'required|max:25|alpha_num',
+            'middle_name' => 'nullable|max:25|alpha_num',
+            'last_name' => 'required|max:25|alpha_num',
+            'email' => 'required|regex:/^([a-z0-9\+_\-]+)(\.[a-z0-9\+_\-]+)*@([a-z0-9\-]+\.)+[a-z]{2,6}$/ix',
+            'password' => 'required|min:8|regex:/^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$/',
+            'display_picture' => 'required|mimes:jpg,jpeg,png,bmp,tiff',
+        );
+
+        $validator = Validator::make($credentials, $rules, $messages = [
+            'role_id.required' => 'The role field is required',
+            'gender_id.required' => 'The gender field is required',
+            'required' => 'The :attribute field is required',
+            'min' => 'The :attribute length must be at least :min character(s)',
+            'max' => 'The :attribute max length is :max character(s)',
+            'alpha_num' => 'The :attribute value can not contain symbol',
+            'password.regex' => 'Password must contain at least 1 number(s)',
+            'display_picture.mimes' => 'Display picture must be an image with type: jpg, jpeg, png, bmp, tiff',
+        ]);
+        $errors = $validator->errors();
+
+        if ($validator->fails()) {
+            return back()->with(['errors' => $errors]);
+        }
+
+        Storage::disk('public')->put('images', $req->display_picture);
+        $credentials['password'] = Hash::make($credentials['password']);
+        $credentials['display_picture_link'] = '/uploads/images/' . $req->display_picture->hashName();
+
+        Account::where('account_id', Auth::user()->account_id)->update([
+            'gender_id' => $credentials['gender_id'],
+            'first_name' => $credentials['first_name'],
+            'middle_name' => $credentials['middle_name'],
+            'last_name' => $credentials['last_name'],
+            'email' => $credentials['email'],
+            'password' => $credentials['password'],
+            'display_picture_link' => $credentials['display_picture_link'],
+            'modified_at' => date('Y-m-d H:i:s'),
+            'modified_by' => Auth::user()->first_name.Auth::user()->last_name
+        ]);
+        return back();
     }
 }
