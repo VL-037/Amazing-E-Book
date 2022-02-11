@@ -2,6 +2,7 @@
 
 @section('content')
 
+    <h1 class="display-6 text-center mb-3">Home</h1>
     <table class="table table-striped table-bordered">
         <thead>
             <tr class="text-center">

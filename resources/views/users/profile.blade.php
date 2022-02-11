@@ -13,7 +13,7 @@
             </div>
         </div>
     @endif
-    <h1 class="display-4">Your Profile</h1>
+    <h1 class="display-6 text-center mb-3">Profile</h1>
     <div class="d-flex row">
         <div class="col-4">
             <img src="{{ $user->display_picture_link }}" alt="{{ $user->first_name }}_profile" style="max-width: 100%;">
