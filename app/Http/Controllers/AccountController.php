@@ -191,6 +191,7 @@ class AccountController extends Controller
             'modified_at' => date('Y-m-d H:i:s'),
             'modified_by' => Auth::user()->first_name.Auth::user()->last_name
         ]);
-        return back();
+        $myRoleDesc = Role::where('role_id', Auth::user()->role_id)->with('accounts')->first()->role_desc;
+        return view('users.saved')->with(['myRole' => $myRoleDesc]);
     }
 }
