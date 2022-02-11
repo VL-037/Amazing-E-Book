@@ -17,15 +17,30 @@
         <div style="background-color: #99ccff">
             <div class="container d-flex align-items-center justify-content-center">
                 <p class="navbar-brand">
-                <a href="/" class="text-decoration-none text-dark"><h1 class="display-2 my-5"><b>Amazing E-Book</b></h1></a>
+                    <a href="/" class="text-decoration-none text-dark">
+                        <h1 class="display-2 my-5"><b>Amazing E-Book</b></h1>
+                    </a>
                 </p>
             </div>
-            @guest
-                <div class="text-center pb-3">
+            <div class="text-center pb-3">
+                @guest
                     <a href="/signup"><button class="btn btn-warning">Sign Up</button></a>
                     <a href="/login"><button class="btn btn-warning">Login</button></a>
+                @endguest
+                @auth
+                    <a href="/logout"><button class="btn btn-warning">Logout</button></a>
+                @endauth
+            </div>
+            @auth
+                <div class="bg-warning list-unstyled d-flex p-2 text-dark align-items-center justify-content-evenly">
+                    <div><a href="/" class="text-decoration-none text-dark"><b>Home</b></a></div>
+                    <div><a href="/cart" class="text-decoration-none text-dark"><b>Cart</b></a></div>
+                    <div><a href="/profile" class="text-decoration-none text-dark"><b>Profile</b></a></div>
+                    @if ($myRole == 'Admin')
+                        <div><a href="/admins/accounts" class="text-decoration-none text-dark"><b>Account Maintenance</b></a></div>
+                    @endif
                 </div>
-            @endguest
+            @endauth
         </div>
     </nav>
 

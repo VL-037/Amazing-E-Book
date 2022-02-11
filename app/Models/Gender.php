@@ -13,6 +13,6 @@ class Gender extends Model
     protected $guarded = ['id'];
 
     public function accounts() {
-        $this->hasMany(Account::class);
+        return $this->hasMany(Account::class);
     }
 }

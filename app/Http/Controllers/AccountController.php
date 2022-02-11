@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Account;
+use App\Models\EBook;
 use App\Models\Gender;
 use App\Models\Role;
 use Illuminate\Http\Request;
@@ -16,7 +17,9 @@ class AccountController extends Controller
     public function home()
     {
         if (Auth::user()) {
-            return view('users.home');
+            $myRoleDesc = Role::where('role_id', Auth::user()->role_id)->with('accounts')->first()->role_desc;
+            $ebooks = EBook::all();
+            return view('users.home')->with(['ebooks' => $ebooks, 'myRole' => $myRoleDesc]);
         }
         return view('welcome');
     }
@@ -65,10 +68,6 @@ class AccountController extends Controller
         Storage::disk('public')->put('images', $req->display_picture);
         $credentials['password'] = Hash::make($credentials['password']);
         $credentials['display_picture_link'] = '/uploads/images/' . $req->display_picture->hashName();
-
-        // $account = new Account;
-        // $account->fill($credentials);
-        // $account->save();
 
         $account = Account::create([
             'role_id' => $credentials['role_id'],

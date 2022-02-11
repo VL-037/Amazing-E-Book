@@ -10,9 +10,10 @@ class Role extends Model
     use HasFactory;
 
     protected $table = 'role';
-    protected $guarded = ['id'];
+    protected $guarded = ['role_id'];
+    protected $primaryKey = 'id';
 
     public function accounts() {
-        $this->hasMany(Account::class);
+        return $this->hasMany(Account::class);
     }
 }
