@@ -30,3 +30,6 @@ Route::post('/ebooks/{ebook_id}', [EBookController::class, 'addToOrder']);
 Route::get('/cart', [OrderController::class, 'index']);
 Route::delete('/cart/{ebook_id}', [OrderController::class, 'destroyOrderById']);
 Route::delete('/cart', [OrderController::class, 'destroyAllOrders']);
+
+Route::get('/profile', [AccountController::class, 'profile']);
+Route::post('/profile', [AccountController::class, 'updateProfile']);
