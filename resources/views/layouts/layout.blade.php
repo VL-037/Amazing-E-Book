@@ -12,14 +12,20 @@
     <title>Amazing E-Book</title>
 </head>
 
-<body class="vh-100">
+<body class="d-flex flex-column vh-100">
     <nav>
         <div style="background-color: #99ccff">
             <div class="container d-flex align-items-center justify-content-center">
                 <p class="navbar-brand">
-                <h1 class="display-2 my-5"><b>Amazing E-Book</b></h1>
+                <a href="/" class="text-decoration-none text-dark"><h1 class="display-2 my-5"><b>Amazing E-Book</b></h1></a>
                 </p>
             </div>
+            @guest
+                <div class="text-center pb-3">
+                    <a href="/signup"><button class="btn btn-warning">Sign Up</button></a>
+                    <a href="/login"><button class="btn btn-warning">Login</button></a>
+                </div>
+            @endguest
         </div>
     </nav>
 
@@ -27,7 +33,7 @@
         @yield('content')
     </div>
 
-    <footer class="footer text-center fixed-bottom py-2" style="background-color: #99ccff">
+    <footer class="footer text-center mt-auto sticky-bottom py-2" style="background-color: #99ccff">
         © <b>Amazing E-Book 2022 - Vincent Low</b>
     </footer>
 
