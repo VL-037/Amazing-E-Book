@@ -24,20 +24,36 @@
             </div>
             <div class="text-center pb-3">
                 @guest
-                    <a href="/signup"><button class="btn btn-warning">Sign Up</button></a>
-                    <a href="/login"><button class="btn btn-warning">Login</button></a>
+                    <a href="/signup"><button class="btn btn-warning">{{ __('view.button.sign_up') }}</button></a>
+                    <a href="/login"><button class="btn btn-warning">{{ __('view.button.login') }}</button></a>
                 @endguest
                 @auth
-                    <a href="/logout"><button class="btn btn-warning">Logout</button></a>
+                    <a href="/logout"><button class="btn btn-warning">{{ __('view.button.logout') }}</button></a>
                 @endauth
+                <div class="position-absolute top-0 end-0 p-3">
+                    <form action="/set_lang" method="POST">
+                        @csrf
+                        <select class="form-select" name="language" id="language" onchange="this.form.submit()">
+                            <option value="" selected>{{__('view.change_language')}}</option>
+                            <option value="ind">Bahasa Indonesia</option>
+                            <option value="eng">English</option>
+                        </select>
+                    </form>
+                </div>
             </div>
             @auth
                 <div class="bg-warning list-unstyled d-flex p-2 text-dark align-items-center justify-content-evenly">
-                    <div><a href="/" class="text-decoration-none text-dark"><b>Home</b></a></div>
-                    <div><a href="/cart" class="text-decoration-none text-dark"><b>Cart</b></a></div>
-                    <div><a href="/profile" class="text-decoration-none text-dark"><b>Profile</b></a></div>
+                    <div><a href="/" class="text-decoration-none text-dark"><b>{{ __('view.page_header.home') }}</b></a>
+                    </div>
+                    <div><a href="/cart"
+                            class="text-decoration-none text-dark"><b>{{ __('view.page_header.cart') }}</b></a>
+                    </div>
+                    <div><a href="/profile"
+                            class="text-decoration-none text-dark"><b>{{ __('view.page_header.profile') }}</b></a></div>
                     @if ($myRole == 'Admin')
-                        <div><a href="/admins/accounts" class="text-decoration-none text-dark"><b>Account Maintenance</b></a></div>
+                        <div><a href="/admins/accounts"
+                                class="text-decoration-none text-dark"><b>{{ __('view.page_header.account_maintenance') }}</b></a>
+                        </div>
                     @endif
                 </div>
             @endauth

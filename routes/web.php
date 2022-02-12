@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AccountController;
+use App\Http\Controllers\Controller;
 use App\Http\Controllers\EBookController;
 use App\Http\Controllers\OrderController;
 use App\Models\Order;
@@ -38,3 +39,5 @@ Route::get('/admins/accounts', [AccountController::class, 'index']);
 Route::get('/admins/accounts/{account_id}', [AccountController::class, 'updateAccountPage']);
 Route::post('/admins/accounts/{account_id}', [AccountController::class, 'updateAccount']);
 Route::delete('/admins/accounts/{account_id}', [AccountController::class, 'destroyAccountById']);
+
+Route::post('/set_lang', [AccountController::class, 'setLanguage']);
