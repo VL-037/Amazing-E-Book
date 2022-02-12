@@ -7,8 +7,10 @@ use App\Models\EBook;
 use App\Models\Gender;
 use App\Models\Role;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
@@ -189,7 +191,7 @@ class AccountController extends Controller
             'password' => $credentials['password'],
             'display_picture_link' => $credentials['display_picture_link'],
             'modified_at' => date('Y-m-d H:i:s'),
-            'modified_by' => Auth::user()->first_name.' '.Auth::user()->last_name
+            'modified_by' => Auth::user()->first_name . ' ' . Auth::user()->last_name
         ]);
         $myRoleDesc = Role::where('role_id', Auth::user()->role_id)->with('accounts')->first()->role_desc;
         return view('users.saved')->with(['myRole' => $myRoleDesc]);
@@ -222,7 +224,7 @@ class AccountController extends Controller
         Account::where('account_id', $req->account_id)->update([
             'role_id' => $credentials['role_id'],
             'modified_at' => date('Y-m-d H:i:s'),
-            'modified_by' => Auth::user()->first_name.' '.Auth::user()->last_name
+            'modified_by' => Auth::user()->first_name . ' ' . Auth::user()->last_name
         ]);
         return redirect('/admins/accounts');
     }
@@ -231,5 +233,12 @@ class AccountController extends Controller
     {
         Account::destroy($account_id);
         return back();
+    }
+
+    public function setLanguage(Request $req)
+    {
+        Session::put(['user_locale' => $req->language]);
+        App::setLocale(session('user_locale'));
+        return redirect()->back();
     }
 }

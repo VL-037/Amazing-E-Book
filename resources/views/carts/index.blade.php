@@ -2,12 +2,12 @@
 
 @section('content')
 
-    <h1 class="display-6 text-center mb-3">Cart</h1>
+    <h1 class="display-6 text-center mb-3">{{ __('view.page_header.cart') }}</h1>
     @if (count($ebooks) > 0)
         <table class="table table-striped table-bordered">
             <thead>
                 <tr class="text-center">
-                    <th class="col-10" scope="col">Title</th>
+                    <th class="col-10" scope="col">{{ __('view.model.author') }}</th>
                     <th class="col-2" scope="col"></th>
                 </tr>
             </thead>
@@ -19,7 +19,7 @@
                             <form action="/cart/{{ $e->order_id }}" method="POST">
                                 @csrf
                                 @method('delete')
-                                <button class="btn btn-danger">Delete</button>
+                                <button class="btn btn-danger">{{ __('view.button.delete') }}</button>
                             </form>
                         </td>
                     </tr>
@@ -30,11 +30,11 @@
             <form action="/cart" method="POST">
                 @csrf
                 @method('delete')
-                <button class="btn btn-warning">Submit</button>
+                <button class="btn btn-warning">{{ __('view.button.submit') }}</button>
             </form>
         </div>
     @else
-        <div class="text-center">Cart is empty...</div>
+        <div class="text-center">{{ __('view.cart_empty') }}...</div>
     @endif
 
 @endsection
