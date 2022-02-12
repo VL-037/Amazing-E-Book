@@ -46,7 +46,7 @@ class AccountController extends Controller
             'last_name' => 'required|max:25|alpha_num',
             'email' => 'required|regex:/^([a-z0-9\+_\-]+)(\.[a-z0-9\+_\-]+)*@([a-z0-9\-]+\.)+[a-z]{2,6}$/ix',
             'password' => 'required|min:8|regex:/^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$/',
-            'display_picture' => 'required|mimes:jpg,jpeg,png,bmp,tiff',
+            'display_picture' => 'required|image',
         );
 
         $validator = Validator::make($credentials, $rules, $messages = [
@@ -57,7 +57,7 @@ class AccountController extends Controller
             'max' => 'The :attribute max length is :max character(s)',
             'alpha_num' => 'The :attribute value can not contain symbol',
             'password.regex' => 'Password must contain at least 1 number(s)',
-            'display_picture.mimes' => 'Display picture must be an image with type: jpg, jpeg, png, bmp, tiff',
+            'image' => 'The :attribute file must be an image',
         ]);
         $errors = $validator->errors();
 
@@ -157,7 +157,7 @@ class AccountController extends Controller
             'last_name' => 'required|max:25|alpha_num',
             'email' => 'required|regex:/^([a-z0-9\+_\-]+)(\.[a-z0-9\+_\-]+)*@([a-z0-9\-]+\.)+[a-z]{2,6}$/ix',
             'password' => 'required|min:8|regex:/^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$/',
-            'display_picture' => 'required|mimes:jpg,jpeg,png,bmp,tiff',
+            'display_picture' => 'required|image',
         );
 
         $validator = Validator::make($credentials, $rules, $messages = [
@@ -168,7 +168,7 @@ class AccountController extends Controller
             'max' => 'The :attribute max length is :max character(s)',
             'alpha_num' => 'The :attribute value can not contain symbol',
             'password.regex' => 'Password must contain at least 1 number(s)',
-            'display_picture.mimes' => 'Display picture must be an image with type: jpg, jpeg, png, bmp, tiff',
+            'image' => 'The :attribute file must be an image',
         ]);
         $errors = $validator->errors();
 
