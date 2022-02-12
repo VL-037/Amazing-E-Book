@@ -3,8 +3,8 @@
 @section('content')
 
     <div class="text-center">
-        <h1 class="display-4">Saved</h1>
-        <a href="/">Click Here to "Home"</a>
+        <h1 class="display-4">{{ __('view.saved') }}</h1>
+        <a href="/">{{ __('view.click_to_home') }}</a>
     </div>
 
 @endsection

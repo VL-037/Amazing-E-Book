@@ -2,6 +2,6 @@
 
 @section('content')
 
-    <h1 class="display-4 text-center">Find and Rent Your E-Book Here!</h1>
+    <h1 class="display-4 text-center">{{ __('view.welcome') }}</h1>
 
 @endsection

@@ -7,8 +7,10 @@ use App\Models\EBook;
 use App\Models\Gender;
 use App\Models\Role;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
@@ -46,7 +48,7 @@ class AccountController extends Controller
             'last_name' => 'required|max:25|alpha_num',
             'email' => 'required|regex:/^([a-z0-9\+_\-]+)(\.[a-z0-9\+_\-]+)*@([a-z0-9\-]+\.)+[a-z]{2,6}$/ix',
             'password' => 'required|min:8|regex:/^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$/',
-            'display_picture' => 'required|mimes:jpg,jpeg,png,bmp,tiff',
+            'display_picture' => 'required|image',
         );
 
         $validator = Validator::make($credentials, $rules, $messages = [
@@ -57,7 +59,7 @@ class AccountController extends Controller
             'max' => 'The :attribute max length is :max character(s)',
             'alpha_num' => 'The :attribute value can not contain symbol',
             'password.regex' => 'Password must contain at least 1 number(s)',
-            'display_picture.mimes' => 'Display picture must be an image with type: jpg, jpeg, png, bmp, tiff',
+            'image' => 'The :attribute file must be an image',
         ]);
         $errors = $validator->errors();
 
@@ -157,7 +159,7 @@ class AccountController extends Controller
             'last_name' => 'required|max:25|alpha_num',
             'email' => 'required|regex:/^([a-z0-9\+_\-]+)(\.[a-z0-9\+_\-]+)*@([a-z0-9\-]+\.)+[a-z]{2,6}$/ix',
             'password' => 'required|min:8|regex:/^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$/',
-            'display_picture' => 'required|mimes:jpg,jpeg,png,bmp,tiff',
+            'display_picture' => 'required|image',
         );
 
         $validator = Validator::make($credentials, $rules, $messages = [
@@ -168,7 +170,7 @@ class AccountController extends Controller
             'max' => 'The :attribute max length is :max character(s)',
             'alpha_num' => 'The :attribute value can not contain symbol',
             'password.regex' => 'Password must contain at least 1 number(s)',
-            'display_picture.mimes' => 'Display picture must be an image with type: jpg, jpeg, png, bmp, tiff',
+            'image' => 'The :attribute file must be an image',
         ]);
         $errors = $validator->errors();
 
@@ -189,7 +191,7 @@ class AccountController extends Controller
             'password' => $credentials['password'],
             'display_picture_link' => $credentials['display_picture_link'],
             'modified_at' => date('Y-m-d H:i:s'),
-            'modified_by' => Auth::user()->first_name.Auth::user()->last_name
+            'modified_by' => Auth::user()->first_name . ' ' . Auth::user()->last_name
         ]);
         $myRoleDesc = Role::where('role_id', Auth::user()->role_id)->with('accounts')->first()->role_desc;
         return view('users.saved')->with(['myRole' => $myRoleDesc]);
@@ -205,11 +207,38 @@ class AccountController extends Controller
         return redirect('/');
     }
 
-    public function updateAccount($account_id)
+    public function updateAccountPage($account_id)
     {
+        if (Auth::user() && session()->has('account')) {
+            $account = Account::where('account_id', $account_id)->first();
+            $roles = Role::all();
+            $myRoleDesc = Role::where('role_id', Auth::user()->role_id)->first()->role_desc;
+            return view('users.admins.update')->with(['account' => $account, 'roles' => $roles, 'myRole' => $myRoleDesc]);
+        }
+        return redirect('/');
+    }
+
+    public function updateAccount(Request $req)
+    {
+        $credentials = $req->except(array('_token'));
+        Account::where('account_id', $req->account_id)->update([
+            'role_id' => $credentials['role_id'],
+            'modified_at' => date('Y-m-d H:i:s'),
+            'modified_by' => Auth::user()->first_name . ' ' . Auth::user()->last_name
+        ]);
+        return redirect('/admins/accounts');
     }
 
     public function destroyAccountById($account_id)
     {
+        Account::destroy($account_id);
+        return back();
+    }
+
+    public function setLanguage(Request $req)
+    {
+        Session::put(['user_locale' => $req->language]);
+        App::setLocale(session('user_locale'));
+        return redirect()->back();
     }
 }
