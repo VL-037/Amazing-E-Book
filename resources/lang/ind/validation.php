@@ -20,7 +20,7 @@ return [
     'after_or_equal' => 'The :attribute must be a date after or equal to :date.',
     'alpha' => 'The :attribute must only contain letters.',
     'alpha_dash' => 'The :attribute must only contain letters, numbers, dashes and underscores.',
-    'alpha_num' => 'The '.strtoupper(':attribute').' value can not contain symbol.',
+    'alpha_num' => strtoupper(':attribute').' tidak boleh mengandung simbol.',
     'array' => 'The :attribute must be an array.',
     'before' => 'The :attribute must be a date before :date.',
     'before_or_equal' => 'The :attribute must be a date before or equal to :date.',
@@ -43,7 +43,7 @@ return [
     'digits_between' => 'The :attribute must be between :min and :max digits.',
     'dimensions' => 'The :attribute has invalid image dimensions.',
     'distinct' => 'The :attribute field has a duplicate value.',
-    'email' => 'The '.strtoupper(':attribute').' must be a valid email address.',
+    'email' => ' ALAMAT SUREL tidak valid',
     'ends_with' => 'The :attribute must end with one of the following: :values.',
     'enum' => 'The selected :attribute is invalid.',
     'exists' => 'The selected :attribute is invalid.',
@@ -61,7 +61,7 @@ return [
         'string' => 'The :attribute must be greater than or equal to :value characters.',
         'array' => 'The :attribute must have :value items or more.',
     ],
-    'image' => 'The '.strtoupper(':attribute').' file must be an image.',
+    'image' => strtoupper(':attribute').' harus sebuah gambar.',
     'in' => 'The selected :attribute is invalid.',
     'in_array' => 'The :attribute field does not exist in :other.',
     'integer' => 'The :attribute must be an integer.',
@@ -85,7 +85,7 @@ return [
     'max' => [
         'numeric' => 'The :attribute must not be greater than :max.',
         'file' => 'The :attribute must not be greater than :max kilobytes.',
-        'string' => 'The '.strtoupper(':attribute').' max length is :max character(s).',
+        'string' => 'Maksimal panjang '.strtoupper(':attribute').' adalah :max karakter.',
         'array' => 'The :attribute must not have more than :max items.',
     ],
     'mimes' => 'The :attribute must be a file of type: :values.',
@@ -93,7 +93,7 @@ return [
     'min' => [
         'numeric' => 'The :attribute must be at least :min.',
         'file' => 'The :attribute must be at least :min kilobytes.',
-        'string' => 'The '.strtoupper(':attribute').' length must be at least :min character(s).',
+        'string' => 'Minimal panjang '.strtoupper(':attribute').' adalah :min karakter.',
         'array' => 'The :attribute must have at least :min items.',
     ],
     'multiple_of' => 'The :attribute must be a multiple of :value.',
@@ -107,7 +107,7 @@ return [
     'prohibited_unless' => 'The :attribute field is prohibited unless :other is in :values.',
     'prohibits' => 'The :attribute field prohibits :other from being present.',
     'regex' => 'The :attribute format is invalid.',
-    'required' => 'The '.strtoupper(':attribute').' field is required.',
+    'required' => 'Kolom '.strtoupper(':attribute').' tidak boleh kosong.',
     'required_if' => 'The :attribute field is required when :other is :value.',
     'required_unless' => 'The :attribute field is required unless :other is in :values.',
     'required_with' => 'The :attribute field is required when :values is present.',
@@ -145,13 +145,20 @@ return [
             'rule-name' => 'custom-message',
         ],
         'role_id' => [
-            'required' => 'The ROLE field is required.',
+            'required' => 'PERAN harus dipilih.',
         ],
         'gender_id' => [
-            'required' => 'The GENDER field is required.',
+            'required' => 'JENIS KELAMIN harus dipilih.',
+        ],
+        'email' => [
+            'required' => 'Kolom ALAMAT SUREL tidak boleh kosong.',
         ],
         'password' => [
-            'regex' => 'The PASSWORD must contain at least 1 number.'
+            'required' => 'Kolom KATA SANDI tidak boleh kosong.',
+            'regex' => 'KATA SANDI harus memiliki min 1 angka.'
+        ],
+        'display_picture' => [
+            'required' => 'GAMBAR PROFIL harus dipilih.'
         ]
     ],
 

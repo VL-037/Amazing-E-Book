@@ -17,26 +17,32 @@
         @csrf
         <div class="row">
             <div class="col mb-3">
-                <label class="form-label" for="first_name">{{ __('view.input.first_name') }}<span
+                <label class="form-label"
+                    for="{{ __('view.input.first_name') }}">{{ __('view.input.first_name') }}<span
                         class="text-danger">*</span></label>
-                <input class="form-control" type="text" name="first_name" id="first_name" placeholder="John">
+                <input class="form-control" type="text" name="first_name" id="{{ __('view.input.first_name') }}"
+                    placeholder="John">
             </div>
             <div class="col mb-3">
-                <label class="form-label" for="middle_name">{{ __('view.input.middle_name') }}</label>
-                <input class="form-control" type="text" name="middle_name" id="middle_name" placeholder="Foo">
+                <label class="form-label"
+                    for="{{ __('view.input.middle_name') }}">{{ __('view.input.middle_name') }}</label>
+                <input class="form-control" type="text" name="middle_name" id="{{ __('view.input.middle_name') }}"
+                    placeholder="Foo">
             </div>
             <div class="col mb-3">
-                <label class="form-label" for="last_name">{{ __('view.input.last_name') }}<span
+                <label class="form-label"
+                    for="{{ __('view.middle.first_name') }}">{{ __('view.input.last_name') }}<span
                         class="text-danger">*</span></label>
-                <input class="form-control" type="text" name="last_name" id="last_name" placeholder="Doe">
+                <input class="form-control" type="text" name="last_name" id="{{ __('view.middle.first_name') }}"
+                    placeholder="Doe">
             </div>
         </div>
 
         <div class="row">
             <div class="col mb-3">
-                <label class="form-label" for="gender_id">{{ __('view.input.gender') }}<span
+                <label class="form-label" for="{{ __('view.input.gender') }}">{{ __('view.input.gender') }}<span
                         class="text-danger">*</span></label>
-                <select class="form-select" name="gender_id" id="gender_id">
+                <select class="form-select" name="gender_id" id="{{ __('view.input.gender') }}">
                     <option value="">{{ __('view.choose') }}...</option>
                     @foreach ($genders as $g)
                         <option value="{{ $g->gender_id }}">{{ ucfirst(strtolower($g->gender_desc)) }}</option>
@@ -44,9 +50,9 @@
                 </select>
             </div>
             <div class="col mb-3">
-                <label class="form-label" for="role_id">{{ __('view.input.role') }}<span
+                <label class="form-label" for="{{ __('view.input.role') }}">{{ __('view.input.role') }}<span
                         class="text-danger">*</span></label>
-                <select class="form-select" name="role_id" id="role_id">
+                <select class="form-select" name="role_id" id="{{ __('view.input.role') }}">
                     <option value="">{{ __('view.choose') }}...</option>
                     @foreach ($roles as $r)
                         <option value="{{ $r->role_id }}">{{ ucfirst(strtolower($r->role_desc)) }}</option>
@@ -57,24 +63,24 @@
 
         <div class="row">
             <div class="col mb-3">
-                <label class="form-label" for="email">{{ __('view.input.email') }}<span
+                <label class="form-label" for="{{ __('view.input.email') }}">{{ __('view.input.email') }}<span
                         class="text-danger">*</span></label>
-                <input class="form-control" type="text" name="email" id="email" placeholder="john.doe@example.com">
+                <input class="form-control" type="text" name="email" id="{{ __('view.input.email') }}" placeholder="john.doe@example.com">
             </div>
             <div class="col mb-3">
-                <label class="form-label" for="password">{{ __('view.input.password') }}<span
+                <label class="form-label" for="{{ __('view.input.password') }}">{{ __('view.input.password') }}<span
                         class="text-danger">*</span></label>
-                <input class="form-control" type="password" name="password" id="password"
+                <input class="form-control" type="password" name="password" id="{{ __('view.input.password') }}"
                     placeholder="{{ __('view.input.password') }}">
             </div>
         </div>
 
         <div class="mb-3">
             <div class="form-group">
-                <label class="form-label" for="display_picture">{{ __('view.input.display_picture') }}<span
+                <label class="form-label" for="{{ __('view.input.display_picture') }}">{{ __('view.input.display_picture') }}<span
                         class="text-danger">*</span></label>
                 <input class="form-control" type="file" class="form-control-file" name="display_picture"
-                    id="display_picture">
+                    id="{{ __('view.input.display_picture') }}">
             </div>
         </div>
 
