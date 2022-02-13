@@ -155,10 +155,11 @@ return [
         ],
         'password' => [
             'required' => 'Kolom KATA SANDI tidak boleh kosong.',
-            'regex' => 'KATA SANDI harus memiliki min 1 angka.'
+            'regex' => 'KATA SANDI harus memiliki min 1 angka.',
         ],
         'display_picture' => [
-            'required' => 'GAMBAR PROFIL harus dipilih.'
+            'required' => 'GAMBAR PROFIL harus dipilih.',
+            'image' => 'GAMBAR PROFIL harus sebuah gambar.',
         ]
     ],
 
