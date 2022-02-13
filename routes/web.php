@@ -18,26 +18,26 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [AccountController::class, 'home']);
+Route::get('/', [AccountController::class, 'home'])->name('home');
 Route::get('/signup', [AccountController::class, 'signUp']);
 Route::post('/signup', [AccountController::class, 'signUpStore']);
 Route::get('/login', [AccountController::class, 'login']);
 Route::post('/login', [AccountController::class, 'loginAuth']);
-Route::get('/logout', [AccountController::class, 'logout']);
+Route::get('/logout', [AccountController::class, 'logout'])->middleware('auth');
 
-Route::get('/ebooks/{ebook_id}', [EBookController::class, 'detail']);
-Route::post('/ebooks/{ebook_id}', [EBookController::class, 'addToOrder']);
+Route::get('/ebooks/{ebook_id}', [EBookController::class, 'detail'])->middleware('auth');
+Route::post('/ebooks/{ebook_id}', [EBookController::class, 'addToOrder'])->middleware('auth');
 
-Route::get('/cart', [OrderController::class, 'index']);
-Route::delete('/cart/{ebook_id}', [OrderController::class, 'destroyOrderById']);
-Route::delete('/cart', [OrderController::class, 'destroyAllOrders']);
+Route::get('/cart', [OrderController::class, 'index'])->middleware('auth');
+Route::delete('/cart/{ebook_id}', [OrderController::class, 'destroyOrderById'])->middleware('auth');
+Route::delete('/cart', [OrderController::class, 'destroyAllOrders'])->middleware('auth');
 
-Route::get('/profile', [AccountController::class, 'profile']);
-Route::post('/profile', [AccountController::class, 'updateProfile']);
+Route::get('/profile', [AccountController::class, 'profile'])->middleware('auth');
+Route::post('/profile', [AccountController::class, 'updateProfile'])->middleware('auth');
 
-Route::get('/admins/accounts', [AccountController::class, 'index']);
-Route::get('/admins/accounts/{account_id}', [AccountController::class, 'updateAccountPage']);
-Route::post('/admins/accounts/{account_id}', [AccountController::class, 'updateAccount']);
-Route::delete('/admins/accounts/{account_id}', [AccountController::class, 'destroyAccountById']);
+Route::get('/admins/accounts', [AccountController::class, 'index'])->middleware('auth', 'role:Admin');
+Route::get('/admins/accounts/{account_id}', [AccountController::class, 'updateAccountPage'])->middleware('auth', 'role:Admin');
+Route::post('/admins/accounts/{account_id}', [AccountController::class, 'updateAccount'])->middleware('auth', 'role:Admin');
+Route::delete('/admins/accounts/{account_id}', [AccountController::class, 'destroyAccountById'])->middleware('auth', 'role:Admin');
 
 Route::post('/set_lang', [AccountController::class, 'setLanguage']);

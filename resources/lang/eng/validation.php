@@ -152,7 +152,10 @@ return [
         ],
         'password' => [
             'regex' => 'The PASSWORD must contain at least 1 number.'
-        ]
+        ],
+        'display_picture' => [
+            'image' => 'DISPLAY PICTURE file must be an image.'
+        ],
     ],
 
     /*
