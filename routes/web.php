@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AccountController;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\EBookController;
 use App\Http\Controllers\OrderController;
@@ -19,11 +20,12 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [AccountController::class, 'home'])->name('home');
-Route::get('/signup', [AccountController::class, 'signUp']);
-Route::post('/signup', [AccountController::class, 'signUpStore']);
-Route::get('/login', [AccountController::class, 'login']);
-Route::post('/login', [AccountController::class, 'loginAuth']);
-Route::get('/logout', [AccountController::class, 'logout'])->middleware('auth');
+
+Route::get('/signup', [AuthController::class, 'signUp']);
+Route::post('/signup', [AuthController::class, 'signUpStore']);
+Route::get('/login', [AuthController::class, 'login']);
+Route::post('/login', [AuthController::class, 'loginAuth']);
+Route::get('/logout', [AuthController::class, 'logout'])->middleware('auth');
 
 Route::get('/ebooks/{ebook_id}', [EBookController::class, 'detail'])->middleware('auth');
 Route::post('/ebooks/{ebook_id}', [EBookController::class, 'addToOrder'])->middleware('auth');
