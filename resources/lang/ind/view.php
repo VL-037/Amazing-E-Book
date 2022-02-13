@@ -8,6 +8,7 @@ return [
     'welcome' => 'Cari dan Sewa Buku Elektronikmu Disini!',
     'success' => 'Berhasil',
     'saved' => 'Tersimpan',
+    'logout_success' => 'Berhasil Keluar',
     'click_to_home' => 'Tekan untuk kembali ke "Beranda"',
     'invalid_input' => 'Input Tidak Valid',
     'choose' => 'Pilih',
