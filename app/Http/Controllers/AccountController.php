@@ -42,7 +42,7 @@ class AccountController extends Controller
             'first_name' => 'required|max:25|alpha_num',
             'middle_name' => 'nullable|max:25|alpha_num',
             'last_name' => 'required|max:25|alpha_num',
-            'email' => 'required|regex:/^([a-z0-9\+_\-]+)(\.[a-z0-9\+_\-]+)*@([a-z0-9\-]+\.)+[a-z]{2,6}$/ix',
+            'email' => 'required|email',
             'password' => 'required|min:8|regex:/^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$/',
             'display_picture' => 'required|image',
         );
