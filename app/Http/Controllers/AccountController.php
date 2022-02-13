@@ -28,8 +28,7 @@ class AccountController extends Controller
 
     public function signUp()
     {
-        $user = Auth::user() && session()->has('account');
-        if ($user) {
+        if (Auth::user() && session()->has('account')) {
             return redirect('/');
         }
         $genders = Gender::all();
@@ -85,8 +84,7 @@ class AccountController extends Controller
 
     public function login()
     {
-        $user = Auth::user();
-        if ($user) {
+        if (Auth::user() && session()->has('account')) {
             return redirect('/');
         }
         return view('users.login');
@@ -129,20 +127,19 @@ class AccountController extends Controller
 
     public function logout()
     {
+        $session_language = session('user_locale');
         session()->flush();
+        Session::put('user_locale', $session_language);
         Auth::logout();
-        return redirect('/login');
+        return view('users.logout');
     }
 
     public function profile()
     {
         $user = Auth::user();
-        if ($user) {
-            $genders = Gender::all();
-            $myRoleDesc = Role::where('role_id', Auth::user()->role_id)->with('accounts')->first()->role_desc;
-            return view('users.profile')->with(['user' => $user, 'genders' => $genders, 'myRole' => $myRoleDesc]);
-        }
-        return redirect('/');
+        $genders = Gender::all();
+        $myRoleDesc = Role::where('role_id', Auth::user()->role_id)->with('accounts')->first()->role_desc;
+        return view('users.profile')->with(['user' => $user, 'genders' => $genders, 'myRole' => $myRoleDesc]);
     }
 
     public function updateProfile(Request $req)
@@ -158,16 +155,7 @@ class AccountController extends Controller
             'display_picture' => 'required|image',
         );
 
-        $validator = Validator::make($credentials, $rules, $messages = [
-            'role_id.required' => 'The role field is required',
-            'gender_id.required' => 'The gender field is required',
-            'required' => 'The :attribute field is required',
-            'min' => 'The :attribute length must be at least :min character(s)',
-            'max' => 'The :attribute max length is :max character(s)',
-            'alpha_num' => 'The :attribute value can not contain symbol',
-            'password.regex' => 'Password must contain at least 1 number(s)',
-            'image' => 'The :attribute file must be an image',
-        ]);
+        $validator = Validator::make($credentials, $rules);
         $errors = $validator->errors();
 
         if ($validator->fails()) {
@@ -195,23 +183,17 @@ class AccountController extends Controller
 
     public function index()
     {
-        if (Auth::user() && session()->has('account')) {
-            $accounts = Account::with('role')->get();
-            $myRoleDesc = Role::where('role_id', Auth::user()->role_id)->first()->role_desc;
-            return view('users.admins.index')->with(['accounts' => $accounts, 'myRole' => $myRoleDesc]);
-        }
-        return redirect('/');
+        $accounts = Account::with('role')->get();
+        $myRoleDesc = Role::where('role_id', Auth::user()->role_id)->first()->role_desc;
+        return view('users.admins.index')->with(['accounts' => $accounts, 'myRole' => $myRoleDesc]);
     }
 
     public function updateAccountPage($account_id)
     {
-        if (Auth::user() && session()->has('account')) {
-            $account = Account::where('account_id', $account_id)->first();
-            $roles = Role::all();
-            $myRoleDesc = Role::where('role_id', Auth::user()->role_id)->first()->role_desc;
-            return view('users.admins.update')->with(['account' => $account, 'roles' => $roles, 'myRole' => $myRoleDesc]);
-        }
-        return redirect('/');
+        $account = Account::where('account_id', $account_id)->first();
+        $roles = Role::all();
+        $myRoleDesc = Role::where('role_id', Auth::user()->role_id)->first()->role_desc;
+        return view('users.admins.update')->with(['account' => $account, 'roles' => $roles, 'myRole' => $myRoleDesc]);
     }
 
     public function updateAccount(Request $req)

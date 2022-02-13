@@ -23,6 +23,7 @@ class Language
             App::setLocale(session('user_locale'));
         } else {
             App::setLocale(Config::get('app.fallback_locale'));
+            Session::put('user_locale', Config::get('app.fallback_locale'));
         }
         return $next($request);
     }
