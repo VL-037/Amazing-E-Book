@@ -129,9 +129,11 @@ class AccountController extends Controller
 
     public function logout()
     {
+        $session_language = session('user_locale');
         session()->flush();
+        Session::put('user_locale', $session_language);
         Auth::logout();
-        return redirect('/login');
+        return view('users.logout');
     }
 
     public function profile()

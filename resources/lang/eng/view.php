@@ -8,6 +8,7 @@ return [
     'welcome' => 'Find and Rent Your E-Book Here!',
     'success' => 'Success',
     'saved' => 'Saved',
+    'logout_success' => 'Log Out Success',
     'click_to_home' => 'Click Here to "Home',
     'invalid_input' => 'Invalid Input Errors',
     'choose' => 'Choose',
