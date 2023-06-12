@@ -17,8 +17,7 @@ Make sure you have these tools
 | Composer          | https://getcomposer.org/download |
 | XAMPP             | https://sourceforge.net/projects/xampp |
 
-Create a .env file in the root directory and add the following code
-
+- Create a .env file in the root directory and add the following code
 ```
 APP_NAME=Laravel
 APP_ENV=local
@@ -29,14 +28,16 @@ APP_URL=http://localhost
 DB_CONNECTION=mysql
 DB_HOST=127.0.0.1
 DB_PORT=3306
-DB_DATABASE=ReXsteam
+DB_DATABASE=amazingebook
 DB_USERNAME=root
 DB_PASSWORD=
 ```
 
-Run MySQL & Apache from `XAMPP`
+- Run MySQL & Apache from `XAMPP`
 
-Then run the following commands to start the app
+- Create a database same to `DB_DATABASE` .env variable
+
+- Then run the following commands to start the app
 ```
 composer install
 php artisan migrate:fresh --seed
