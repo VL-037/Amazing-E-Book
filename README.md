@@ -35,6 +35,8 @@ DB_PASSWORD=
 
 - Run MySQL & Apache from `XAMPP`
 
+- Open http://localhost/phpmyadmin
+
 - Create a database same to `DB_DATABASE` .env variable
 
 - Then run the following commands to start the app
@@ -43,4 +45,3 @@ composer install
 php artisan migrate:fresh --seed
 php artisan serve
 ```
-
